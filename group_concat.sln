@@ -1,29 +1,51 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "group_concat", "group_concat\group_concat.csproj", "{44E3127F-D07A-4908-9894-A1A21D64B692}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "group_concat_static", "group_concat_static\group_concat_static.csproj", "{CF2005D4-90A9-4470-BB82-93850761156B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "group_concat_dictionary", "group_concat_dictionary\group_concat_dictionary.csproj", "{B1F2E847-2F16-4D09-85F5-67668CF29D23}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "group_concat_list", "group_concat_list\group_concat_list.csproj", "{181BB57D-9437-4ED0-B676-93C51815A625}"
 EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 2
+		SccNumberOfProjects = 4
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs12
 		SccLocalPath0 = .
-		SccProjectUniqueName1 = group_concat\\group_concat.csproj
-		SccProjectName1 = group_concat
-		SccLocalPath1 = group_concat
+		SccProjectUniqueName1 = group_concat_static\\group_concat_static.csproj
+		SccProjectName1 = group_concat_static
+		SccLocalPath1 = group_concat_static
+		SccProjectUniqueName2 = group_concat_dictionary\\group_concat_dictionary.csproj
+		SccProjectName2 = group_concat_dictionary
+		SccLocalPath2 = group_concat_dictionary
+		SccProjectUniqueName3 = group_concat_list\\group_concat_list.csproj
+		SccProjectName3 = group_concat_list
+		SccLocalPath3 = group_concat_list
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{44E3127F-D07A-4908-9894-A1A21D64B692}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{44E3127F-D07A-4908-9894-A1A21D64B692}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{44E3127F-D07A-4908-9894-A1A21D64B692}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{44E3127F-D07A-4908-9894-A1A21D64B692}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{44E3127F-D07A-4908-9894-A1A21D64B692}.Release|Any CPU.Build.0 = Release|Any CPU
-		{44E3127F-D07A-4908-9894-A1A21D64B692}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{CF2005D4-90A9-4470-BB82-93850761156B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF2005D4-90A9-4470-BB82-93850761156B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF2005D4-90A9-4470-BB82-93850761156B}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{CF2005D4-90A9-4470-BB82-93850761156B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CF2005D4-90A9-4470-BB82-93850761156B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CF2005D4-90A9-4470-BB82-93850761156B}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{B1F2E847-2F16-4D09-85F5-67668CF29D23}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1F2E847-2F16-4D09-85F5-67668CF29D23}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B1F2E847-2F16-4D09-85F5-67668CF29D23}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{B1F2E847-2F16-4D09-85F5-67668CF29D23}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B1F2E847-2F16-4D09-85F5-67668CF29D23}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B1F2E847-2F16-4D09-85F5-67668CF29D23}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{181BB57D-9437-4ED0-B676-93C51815A625}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{181BB57D-9437-4ED0-B676-93C51815A625}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{181BB57D-9437-4ED0-B676-93C51815A625}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{181BB57D-9437-4ED0-B676-93C51815A625}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{181BB57D-9437-4ED0-B676-93C51815A625}.Release|Any CPU.Build.0 = Release|Any CPU
+		{181BB57D-9437-4ED0-B676-93C51815A625}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -6,12 +6,12 @@ using System.Data.Sql;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("group_concat")]
+[assembly: AssemblyTitle("group_concat_dictionary")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("group_concat")]
-[assembly: AssemblyCopyright("")]
+[assembly: AssemblyCompany("Charles Schwab & Co.,Inc.")]
+[assembly: AssemblyProduct("group_concat_dictionary")]
+[assembly: AssemblyCopyright("Copyright © Charles Schwab & Co.,Inc. 2011")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
