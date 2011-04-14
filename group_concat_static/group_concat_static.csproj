@@ -49,8 +49,8 @@
     <Reference Include="System.XML" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="thread_safe_dictionary\group_concat_delim_sorted_static.cs" />
-    <Compile Include="thread_safe_dictionary\group_concat_static.cs" />
+    <Compile Include="group_concat_delim_sorted_static.cs" />
+    <Compile Include="group_concat_static.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ThreadSafeDictionary.cs" />
   </ItemGroup>
@@ -64,6 +64,9 @@
     <Content Include="PostDeployScript.sql">
       <SubType>Content</SubType>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="thread_safe_dictionary\" />
   </ItemGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
