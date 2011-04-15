@@ -5,6 +5,7 @@ using System.Data.SqlTypes;
 using Microsoft.SqlServer.Server;
 using System.IO;
 using System.Collections.Generic;
+using System.Text;
 
 namespace group_concat
 {
@@ -15,9 +16,9 @@ namespace group_concat
                              IsInvariantToDuplicates = false,
                              IsInvariantToOrder = true,
                              IsNullIfEmpty = true)]
-    public struct group_concat_delim : IBinarySerialize
+    public struct group_concat_string_delim : IBinarySerialize
     {
-        private List<string> values;
+        private StringBuilder values;
         private string delimiter;
 
         private SqlString Delimiter
@@ -33,7 +34,7 @@ namespace group_concat
 
         public void Init()
         {
-            this.values = new List<string>();
+            this.values = new StringBuilder();
             this.delimiter = null;
         }
 
@@ -42,25 +43,24 @@ namespace group_concat
         {
             if (!Value.IsNull)
             {
-                this.values.Add(Value.Value);
+                this.values.Append(Value.Value + this.delimiter);
             }
             this.Delimiter = Delimiter;
         }
 
-        public void Merge(group_concat_delim Group)
+        public void Merge(group_concat_string_delim Group)
         {
-            this.values.AddRange(values.ToArray());
-
-            //if (!string.IsNullOrEmpty(Group.delimiter) && string.IsNullOrEmpty(this.delimiter))
-            //    this.Delimiter = Group.delimiter;
+            this.values.Append(Group.values.ToString() + ",");
         }
 
         [return: SqlFacet(MaxSize = -1)]
         public SqlString Terminate()
         {
-            if (values.Count > 0)
+            if (values.Length > 0)
             {
-                return new SqlString(string.Join(this.delimiter, this.values.ToArray()));
+                string returnString = values.ToString();
+                returnString = returnString.Remove(returnString.Length - 1);
+                return new SqlString(returnString); 
             }
 
             return null;
@@ -68,24 +68,12 @@ namespace group_concat
 
         public void Read(BinaryReader r)
         {
-            int itemCount = r.ReadInt32();
-            this.values = new List<string>(itemCount);
-            for (int i = 0; i <= itemCount - 1; i++)
-            {
-                this.values.Add(r.ReadString());
-            }
-            this.delimiter = r.ReadString();
+            this.values = new StringBuilder(r.ReadString());
         }
 
         public void Write(BinaryWriter w)
         {
-            w.Write(this.values.Count);
-            foreach (string s in this.values)
-            {
-                w.Write(s);
-            }
-            w.Write(this.delimiter);
+            w.Write(this.values.ToString());
         }
-
     }
 }

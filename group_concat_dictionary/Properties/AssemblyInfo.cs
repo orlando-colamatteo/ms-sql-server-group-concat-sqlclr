@@ -9,9 +9,9 @@ using System.Data.Sql;
 [assembly: AssemblyTitle("group_concat_dictionary")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Charles Schwab & Co.,Inc.")]
+[assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("group_concat_dictionary")]
-[assembly: AssemblyCopyright("Copyright © Charles Schwab & Co.,Inc. 2011")]
+[assembly: AssemblyCopyright("")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

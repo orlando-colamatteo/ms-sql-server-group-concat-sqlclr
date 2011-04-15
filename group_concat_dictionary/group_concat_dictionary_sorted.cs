@@ -93,7 +93,7 @@ namespace group_concat
                     // iterate over the SortedDictionary in descending order
                     for (int i = (sortedValues.Count - 1); i >= 0; i--)
                     {
-                        string key = values.ElementAt(i).Key;
+                        string key = sortedValues.ElementAt(i).Key;
                         for (int value = 0; value < values.ElementAt(i).Value; value++)
                         {
                             returnStringBuilder.Append(key + ",");

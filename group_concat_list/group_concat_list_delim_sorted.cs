@@ -16,7 +16,7 @@ namespace group_concat
                              IsInvariantToDuplicates = false,
                              IsInvariantToOrder = true,
                              IsNullIfEmpty = true)]
-    public struct group_concat_delim_sorted : IBinarySerialize
+    public struct group_concat_list_delim_sorted : IBinarySerialize
     {
         private List<string> values;
         private string delimiter;
@@ -68,7 +68,7 @@ namespace group_concat
             this.SortBy = SortBy;
         }
 
-        public void Merge(group_concat_delim_sorted Group)
+        public void Merge(group_concat_list_delim_sorted Group)
         {
             this.values.AddRange(Group.values.ToArray());
         }

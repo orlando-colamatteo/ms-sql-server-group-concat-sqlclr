@@ -15,26 +15,44 @@ namespace group_concat
                              IsInvariantToDuplicates = false,
                              IsInvariantToOrder = true,
                              IsNullIfEmpty = true)]
-    public struct group_concat : IBinarySerialize
+    public struct group_concat_list_delim : IBinarySerialize
     {
         private List<string> values;
+        private string delimiter;
+
+        private SqlString Delimiter
+        {
+            set
+            {
+                if (this.delimiter == null)
+                {
+                    this.delimiter = value.ToString();
+                }
+            }
+        }
 
         public void Init()
         {
             this.values = new List<string>();
+            this.delimiter = null;
         }
 
-        public void Accumulate([SqlFacet(MaxSize = 4000)] SqlString Value)
+        public void Accumulate([SqlFacet(MaxSize = 4000)] SqlString Value,
+                               [SqlFacet(MaxSize = 1)] SqlString Delimiter)
         {
             if (!Value.IsNull)
             {
                 this.values.Add(Value.Value);
             }
+            this.Delimiter = Delimiter;
         }
 
-        public void Merge(group_concat Group)
+        public void Merge(group_concat_list_delim Group)
         {
             this.values.AddRange(values.ToArray());
+
+            //if (!string.IsNullOrEmpty(Group.delimiter) && string.IsNullOrEmpty(this.delimiter))
+            //    this.Delimiter = Group.delimiter;
         }
 
         [return: SqlFacet(MaxSize = -1)]
@@ -42,7 +60,7 @@ namespace group_concat
         {
             if (values.Count > 0)
             {
-                return new SqlString(string.Join(",", this.values.ToArray()));
+                return new SqlString(string.Join(this.delimiter, this.values.ToArray()));
             }
 
             return null;
@@ -56,6 +74,7 @@ namespace group_concat
             {
                 this.values.Add(r.ReadString());
             }
+            this.delimiter = r.ReadString();
         }
 
         public void Write(BinaryWriter w)
@@ -65,6 +84,8 @@ namespace group_concat
             {
                 w.Write(s);
             }
+            w.Write(this.delimiter);
         }
+
     }
 }

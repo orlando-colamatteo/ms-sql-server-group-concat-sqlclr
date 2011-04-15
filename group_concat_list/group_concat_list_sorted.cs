@@ -16,7 +16,7 @@ namespace group_concat
                              IsInvariantToDuplicates = false,
                              IsInvariantToOrder = true,
                              IsNullIfEmpty = true)]
-    public struct group_concat_sorted : IBinarySerialize
+    public struct group_concat_list_sorted : IBinarySerialize
     {
         private List<string> values;
         private string sortBy;
@@ -53,7 +53,7 @@ namespace group_concat
             this.SortBy = SortBy;
         }
 
-        public void Merge(group_concat_sorted Group)
+        public void Merge(group_concat_list_sorted Group)
         {
             this.values.AddRange(Group.values.ToArray());
         }
