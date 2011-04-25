@@ -19,10 +19,6 @@ CREATE TABLE dbo.TestData
 ) ;
 GO
 
-CREATE CLUSTERED INDEX [dbo.OPC3Test_DocID__INC_FieldType] 
-ON dbo.TestData (DocID,FieldType)
-GO
-
 INSERT  INTO dbo.TestData
         (
          DocID,
@@ -69,6 +65,10 @@ INSERT  INTO dbo.TestData
                 'World',
                 'Hello!'
 GO 30000 -- << SSMS feature to repeat batches multiple times
+
+CREATE CLUSTERED INDEX [dbo.TestData_DocID,FieldType] 
+ON dbo.TestData (DocID,FieldType)
+GO
 
 DECLARE @ct INT ;
 SELECT  @ct = COUNT(*)
