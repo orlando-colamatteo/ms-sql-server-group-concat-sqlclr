@@ -21,7 +21,7 @@ namespace GroupConcat
     {
         private Dictionary<string, int> values;
         private string delimiter;
-        private string sortBy;
+        private byte sortBy;
 
         private SqlString Delimiter
         {
@@ -34,18 +34,21 @@ namespace GroupConcat
             }
         }
 
-        private SqlString SortBy
+        private SqlByte SortBy
         {
             set
             {
-                if (this.sortBy == null)
+                if (this.sortBy == 0)
                 {
-                    string sortByValue = value.ToString().Trim().ToLower();
-                    if (string.Compare(sortByValue, "asc") != 0 && string.Compare(sortByValue, "desc") != 0)
+                    if (
+                        value.Value != 1 // ASC
+                        &&
+                        value.Value != 2 // DESC
+                        )
                     {
-                        throw new Exception("Invalid SortBy value: use ASC or DESC.");
+                        throw new Exception("Invalid SortBy value: use 1 for ASC or 2 for DESC.");
                     }
-                    this.sortBy = sortByValue;
+                    this.sortBy = Convert.ToByte(value.Value);
                 }
             }
         }
@@ -54,12 +57,12 @@ namespace GroupConcat
         {
             this.values = new Dictionary<string, int>();
             this.delimiter = null;
-            this.sortBy = null;
+            this.sortBy = 0;
         }
 
         public void Accumulate([SqlFacet(MaxSize = 4000)] SqlString VALUE,
-                               [SqlFacet(MaxSize = 1)] SqlString DELIMITER,
-                               [SqlFacet(MaxSize = 4)] SqlString SORT_ORDER)
+                               [SqlFacet(MaxSize = 4)] SqlString DELIMITER,
+                               SqlByte SORT_ORDER)
         {
             if (!VALUE.IsNull)
             {
@@ -72,9 +75,9 @@ namespace GroupConcat
                 {
                     this.values.Add(key, 1);
                 }
+                this.Delimiter = DELIMITER;
+                this.SortBy = SORT_ORDER;
             }
-            this.Delimiter = DELIMITER;
-            this.SortBy = SORT_ORDER;
         }
 
         public void Merge(GROUP_CONCAT_DS Group)
@@ -103,12 +106,12 @@ namespace GroupConcat
 
                 SortedDictionary<string, int> sortedValues = new SortedDictionary<string, int>(values);
 
-                if (string.Compare(this.sortBy, "desc") == 0)
+                if (this.sortBy == 2)
                 {
                     // iterate over the SortedDictionary in descending order
                     for (int i = (sortedValues.Count - 1); i >= 0; i--)
                     {
-                        string key = values.ElementAt(i).Key;
+                        string key = sortedValues.ElementAt(i).Key;
                         for (int value = 0; value < values.ElementAt(i).Value; value++)
                         {
                             returnStringBuilder.Append(key + this.delimiter);
@@ -147,7 +150,7 @@ namespace GroupConcat
                 this.values.Add(r.ReadString(), r.ReadInt32());
             }
             this.delimiter = r.ReadString();
-            this.sortBy = r.ReadString();
+            this.sortBy = r.ReadByte();
         }
 
         public void Write(BinaryWriter w)
