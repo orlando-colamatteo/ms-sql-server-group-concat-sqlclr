@@ -132,7 +132,7 @@ DECLARE @res TABLE (DocID INT, Skills NVARCHAR(MAX));
 SET STATISTICS TIME ON ;
 INSERT INTO @res ( DocID, Skills )
 SELECT  DocID,
-        GroupConcatTest.dbo.GROUP_CONCAT_S(DISTINCT ErrorDetail, N'ASC') AS FieldTypeDetail
+        GroupConcatTest.dbo.GROUP_CONCAT_S(DISTINCT ErrorDetail, 1) AS FieldTypeDetail
 FROM    GroupConcatTest.dbo.TestData
 GROUP BY DocID
 ORDER BY DocID ;
@@ -146,7 +146,7 @@ DECLARE @res TABLE (DocID INT, Skills NVARCHAR(MAX));
 SET STATISTICS TIME ON ;
 INSERT INTO @res ( DocID, Skills )
 SELECT  DocID,
-        GroupConcatTest.dbo.GROUP_CONCAT_DS(DISTINCT ErrorDetail, N',', N'ASC') AS FieldTypeDetail
+        GroupConcatTest.dbo.GROUP_CONCAT_DS(DISTINCT ErrorDetail, N',', 1) AS FieldTypeDetail
 FROM    GroupConcatTest.dbo.TestData
 GROUP BY DocID
 ORDER BY DocID ;
@@ -205,7 +205,7 @@ DECLARE @res TABLE (DocID INT, Skills NVARCHAR(MAX));
 SET STATISTICS TIME ON ;
 INSERT INTO @res ( DocID, Skills )
 SELECT  DocID,
-        GroupConcatTest.dbo.GROUP_CONCAT_S(DISTINCT ErrorDetail, N'DESC') AS FieldTypeDetail
+        GroupConcatTest.dbo.GROUP_CONCAT_S(DISTINCT ErrorDetail, 2) AS FieldTypeDetail
 FROM    GroupConcatTest.dbo.TestData
 GROUP BY DocID
 ORDER BY DocID ;
@@ -219,7 +219,7 @@ DECLARE @res TABLE (DocID INT, Skills NVARCHAR(MAX));
 SET STATISTICS TIME ON ;
 INSERT INTO @res ( DocID, Skills )
 SELECT  DocID,
-        GroupConcatTest.dbo.GROUP_CONCAT_DS(DISTINCT ErrorDetail, N',', N'DESC') AS FieldTypeDetail
+        GroupConcatTest.dbo.GROUP_CONCAT_DS(DISTINCT ErrorDetail, N',', 2) AS FieldTypeDetail
 FROM    GroupConcatTest.dbo.TestData
 GROUP BY DocID
 ORDER BY DocID ;
@@ -345,7 +345,7 @@ DECLARE @res TABLE (DocID INT, Skills NVARCHAR(MAX));
 SET STATISTICS TIME ON ;
 INSERT INTO @res ( DocID, Skills )
 SELECT  DocID,
-        GroupConcatTest.dbo.GROUP_CONCAT_S(ErrorDetail, N'ASC') AS FieldTypeDetail
+        GroupConcatTest.dbo.GROUP_CONCAT_S(ErrorDetail, 1) AS FieldTypeDetail
 FROM    GroupConcatTest.dbo.TestData
 GROUP BY DocID
 ORDER BY DocID ;
@@ -359,7 +359,7 @@ DECLARE @res TABLE (DocID INT, Skills NVARCHAR(MAX));
 SET STATISTICS TIME ON ;
 INSERT INTO @res ( DocID, Skills )
 SELECT  DocID,
-        GroupConcatTest.dbo.GROUP_CONCAT_DS(ErrorDetail, N',', N'ASC') AS FieldTypeDetail
+        GroupConcatTest.dbo.GROUP_CONCAT_DS(ErrorDetail, N',', 1) AS FieldTypeDetail
 FROM    GroupConcatTest.dbo.TestData
 GROUP BY DocID
 ORDER BY DocID ;
@@ -416,7 +416,7 @@ DECLARE @res TABLE (DocID INT, Skills NVARCHAR(MAX));
 SET STATISTICS TIME ON ;
 INSERT INTO @res ( DocID, Skills )
 SELECT  DocID,
-        GroupConcatTest.dbo.GROUP_CONCAT_S(ErrorDetail, N'DESC') AS FieldTypeDetail
+        GroupConcatTest.dbo.GROUP_CONCAT_S(ErrorDetail, 2) AS FieldTypeDetail
 FROM    GroupConcatTest.dbo.TestData
 GROUP BY DocID
 ORDER BY DocID ;
@@ -430,7 +430,7 @@ DECLARE @res TABLE (DocID INT, Skills NVARCHAR(MAX));
 SET STATISTICS TIME ON ;
 INSERT INTO @res ( DocID, Skills )
 SELECT  DocID,
-        GroupConcatTest.dbo.GROUP_CONCAT_DS(ErrorDetail, N',', N'DESC') AS FieldTypeDetail
+        GroupConcatTest.dbo.GROUP_CONCAT_DS(ErrorDetail, N',', 2) AS FieldTypeDetail
 FROM    GroupConcatTest.dbo.TestData
 GROUP BY DocID
 ORDER BY DocID ;
