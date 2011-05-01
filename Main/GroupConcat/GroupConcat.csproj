@@ -59,12 +59,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Performance Test Scripts\Performance.5.ProcessPerformanceTestOutput.sql" />
     <Content Include="Performance Test Scripts\Performance.1.Setup.sql" />
     <Content Include="Performance Test Scripts\Performance.2.BuildCLRObjects.sql" />
     <Content Include="Performance Test Scripts\Performance.3.BuildTestData.sql" />
     <Content Include="Performance Test Scripts\Performance.4.RunPerformanceTests.sql" />
-    <Content Include="Performance Test Scripts\Performance.5.Results.sql" />
-    <Content Include="Performance Test Scripts\Performance.6.Cleanup.sql" />
+    <Content Include="Performance Test Scripts\Performance.6.InterpretTestResults.sql" />
+    <Content Include="Performance Test Scripts\Performance.7.Cleanup.sql" />
     <Content Include="Test Scripts\Test.sql">
       <SubType>Content</SubType>
     </Content>
