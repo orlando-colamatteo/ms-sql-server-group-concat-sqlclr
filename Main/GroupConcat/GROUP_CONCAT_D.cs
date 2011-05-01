@@ -40,7 +40,7 @@ namespace GroupConcat
         }
 
         public void Accumulate([SqlFacet(MaxSize = 4000)] SqlString VALUE,
-                               [SqlFacet(MaxSize = 1)] SqlString DELIMITER)
+                               [SqlFacet(MaxSize = 4)] SqlString DELIMITER)
         {
             if (!VALUE.IsNull)
             {
