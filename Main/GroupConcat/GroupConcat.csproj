@@ -59,6 +59,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Installation Scripts\GroupConcatUninstallation.sql" />
+    <Content Include="Installation Scripts\GroupConcatInstallation.sql" />
+    <Content Include="Installation Scripts\Test.1.BuildTestData.sql" />
+    <Content Include="Installation Scripts\Test.2.DemoFunctions.sql" />
     <Content Include="Performance Test Scripts\Performance.5.ProcessPerformanceTestOutput.sql" />
     <Content Include="Performance Test Scripts\Performance.1.Setup.sql" />
     <Content Include="Performance Test Scripts\Performance.2.BuildCLRObjects.sql" />
