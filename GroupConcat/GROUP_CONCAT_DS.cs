@@ -27,9 +27,10 @@ namespace GroupConcat
         {
             set
             {
-                if (this.delimiter == null)
+                string newDelimiter = value.ToString();
+                if (this.delimiter != newDelimiter)
                 {
-                    this.delimiter = value.ToString();
+                    this.delimiter = newDelimiter;
                 }
             }
         }
@@ -56,7 +57,7 @@ namespace GroupConcat
         public void Init()
         {
             this.values = new Dictionary<string, int>();
-            this.delimiter = null;
+            this.delimiter = string.Empty;
             this.sortBy = 0;
         }
 
