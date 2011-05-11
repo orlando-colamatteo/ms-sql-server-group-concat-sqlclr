@@ -6,7 +6,6 @@ using Microsoft.SqlServer.Server;
 using System.IO;
 using System.Collections.Generic;
 using System.Text;
-using System.Linq;
 
 namespace GroupConcat
 {
@@ -102,41 +101,33 @@ namespace GroupConcat
         {
             if (this.values != null && this.values.Count > 0)
             {
+                SortedDictionary<string, int> sortedValues;
                 StringBuilder returnStringBuilder = new StringBuilder();
                 string returnString;
 
-                SortedDictionary<string, int> sortedValues = new SortedDictionary<string, int>(values);
-
                 if (this.sortBy == 2)
                 {
-                    // iterate over the SortedDictionary in descending order
-                    for (int i = (sortedValues.Count - 1); i >= 0; i--)
-                    {
-                        string key = sortedValues.ElementAt(i).Key;
-                        for (int value = 0; value < values.ElementAt(i).Value; value++)
-                        {
-                            returnStringBuilder.Append(key + this.delimiter);
-                        }
-                    }
-                    returnString = returnStringBuilder.ToString();
-                    returnString = returnString.Remove(returnString.Length - 1, 1);
-                    return new SqlString(returnString);
+                    // create SortedDictionary in descending order using the ReverseComparer
+                    sortedValues = new SortedDictionary<string, int>(values, new ReverseComparer());
                 }
                 else
                 {
-                    // iterate over the SortedDictionary
-                    foreach (KeyValuePair<string, int> item in sortedValues)
-                    {
-                        string key = item.Key;
-                        for (int value = 0; value < item.Value; value++)
-                        {
-                            returnStringBuilder.Append(key + this.delimiter);
-                        }
-                    }
-                    returnString = returnStringBuilder.ToString();
-                    returnString = returnString.Remove(returnString.Length - 1, 1);
-                    return new SqlString(returnString);
+                    // create SortedDictionary in ascending order using the default comparer
+                    sortedValues = new SortedDictionary<string, int>(values);
                 }
+
+                // iterate over the SortedDictionary
+                foreach (KeyValuePair<string, int> item in sortedValues)
+                {
+                    string key = item.Key;
+                    for (int value = 0; value < item.Value; value++)
+                    {
+                        returnStringBuilder.Append(key + this.delimiter);
+                    }
+                }
+                returnString = returnStringBuilder.ToString();
+                returnString = returnString.Remove(returnString.Length - 1, 1);
+                return new SqlString(returnString);
             }
 
             return null;

@@ -53,6 +53,12 @@ IF @@TRANCOUNT = 0
         BEGIN TRANSACTION;
     END
 GO
+EXEC sys.sp_addextendedproperty 
+    @name = N'URL',
+    @value = N'http://groupconcat.codeplex.com',
+    @level0type = N'ASSEMBLY',
+    @level0name = N'GroupConcat'
+GO
 -------------------------------------------------------------------------------------------------------------------
 PRINT N'Creating [dbo].[GROUP_CONCAT_D]...';
 GO
