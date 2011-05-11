@@ -65,7 +65,7 @@ namespace GroupConcat
                 string key = item.Key;
                 if (this.values.ContainsKey(key))
                 {
-                    this.values[key] += 1;
+                    this.values[key] += Group.values[key];
                 }
                 else
                 {
