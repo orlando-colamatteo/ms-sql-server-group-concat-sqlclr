@@ -1,4 +1,10 @@
-﻿using System;
+﻿/*
+ Full credit for this class goes to Adam Machanic. It was copied verbatim
+ * from book "Expert SQL Server 2005 Development" and the content of this
+ * class is freely available on the internet through Google Books.
+ */
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
