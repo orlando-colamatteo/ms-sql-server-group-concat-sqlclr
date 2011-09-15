@@ -80,18 +80,16 @@ namespace GroupConcat
             if (this.values != null && this.values.Count > 0)
             {
                 StringBuilder returnStringBuilder = new StringBuilder();
-                string returnString;
+
                 foreach (KeyValuePair<string, int> item in this.values)
                 {
-                    string key = item.Key;
                     for (int value = 0; value < item.Value; value++)
                     {
-                        returnStringBuilder.Append(key + this.delimiter);
+                        returnStringBuilder.Append(item.Key);
+                        returnStringBuilder.Append(this.delimiter);
                     }
                 }
-                returnString = returnStringBuilder.ToString();
-                returnString = returnString.Remove(returnString.Length - 1, 1);
-                return new SqlString(returnString);
+                return returnStringBuilder.Remove(returnStringBuilder.Length - 1, 1).ToString();
             }
 
             return null;

@@ -87,7 +87,6 @@ namespace GroupConcat
             {
                 SortedDictionary<string, int> sortedValues;
                 StringBuilder returnStringBuilder = new StringBuilder();
-                string returnString;
 
                 if (this.sortBy == 2)
                 {
@@ -106,12 +105,11 @@ namespace GroupConcat
                     string key = item.Key;
                     for (int value = 0; value < item.Value; value++)
                     {
-                        returnStringBuilder.Append(key + ",");
+                        returnStringBuilder.Append(key);
+                        returnStringBuilder.Append(",");
                     }
                 }
-                returnString = returnStringBuilder.ToString();
-                returnString = returnString.Remove(returnString.Length - 1, 1);
-                return new SqlString(returnString);
+                return returnStringBuilder.Remove(returnStringBuilder.Length - 1, 1).ToString();
             }
 
             return null;

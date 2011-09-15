@@ -60,19 +60,19 @@ namespace GroupConcat
         [return: SqlFacet(MaxSize = -1)]
         public SqlString Terminate()
         {
-            if (this.values.Count > 0)
+            if (this.values != null && this.values.Count > 0)
             {
-                StringBuilder returnString = new StringBuilder();
+                StringBuilder returnStringBuilder = new StringBuilder();
+
                 foreach (KeyValuePair<string, int> item in this.values)
                 {
-                    string key = item.Key;
-                    for (int keys = 0; keys < item.Value; keys++)
+                    for (int value = 0; value < item.Value; value++)
                     {
-                        returnString.Append(item.Key + ",");
+                        returnStringBuilder.Append(item.Key);
+                        returnStringBuilder.Append(",");
                     }
                 }
-                string returnString2 = returnString.ToString();
-                return new SqlString(returnString2.Substring(0, returnString2.Length - 1));
+                return returnStringBuilder.Remove(returnStringBuilder.Length - 1, 1).ToString();
             }
 
             return null;
