@@ -124,8 +124,9 @@ namespace GroupConcat
                         returnStringBuilder.Append(this.delimiter);
                     }
                 }
-                
-                return returnStringBuilder.Remove(returnStringBuilder.Length - 1, 1).ToString();
+
+                // remove trailing delimiter as we return the result
+                return returnStringBuilder.Remove(returnStringBuilder.Length - this.delimiter.Length, this.delimiter.Length).ToString();
             }
 
             return null;
