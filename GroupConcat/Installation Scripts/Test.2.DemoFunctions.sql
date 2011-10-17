@@ -54,6 +54,13 @@ FROM    dbo.GroupConcatTestData
 GROUP BY DocID
 ORDER BY DocID ;
 
+PRINT '---------- DISTINCT, unsorted: CLR GROUP_CONCAT_D (multi-byte delimiter) ------------------'
+SELECT  DocID,
+        dbo.GROUP_CONCAT_D(DISTINCT ErrorDetail, N'~~~~') AS FieldTypeDetail
+FROM    dbo.GroupConcatTestData
+GROUP BY DocID
+ORDER BY DocID ;
+
 PRINT '-------------------------------------------------------------------------------------------'
 PRINT '---------- DISTINCT, sorted ASC: XML PATH -------------------------------------------------'
 SELECT  DocID,
@@ -96,6 +103,13 @@ ORDER BY DocID ;
 PRINT '---------- DISTINCT, sorted ASC: CLR GROUP_CONCAT_DS --------------------------------------'
 SELECT  DocID,
         dbo.GROUP_CONCAT_DS(DISTINCT ErrorDetail, N',', 1) AS FieldTypeDetail
+FROM    dbo.GroupConcatTestData
+GROUP BY DocID
+ORDER BY DocID ;
+
+PRINT '---------- DISTINCT, sorted ASC: CLR GROUP_CONCAT_DS (multi-byte delimiter) ---------------'
+SELECT  DocID,
+        dbo.GROUP_CONCAT_DS(DISTINCT ErrorDetail, N'~~~~', 1) AS FieldTypeDetail
 FROM    dbo.GroupConcatTestData
 GROUP BY DocID
 ORDER BY DocID ;
