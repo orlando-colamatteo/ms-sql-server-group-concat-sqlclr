@@ -66,6 +66,11 @@ namespace GroupConcat
 
         public void Merge(GROUP_CONCAT_S Group)
         {
+            if (this.sortBy == 0)
+            {
+                this.sortBy = Group.sortBy;
+            }
+
             foreach (KeyValuePair<string, int> item in Group.values)
             {
                 string key = item.Key;
@@ -75,7 +80,7 @@ namespace GroupConcat
                 }
                 else
                 {
-                    this.values.Add(key, 1);
+                    this.values.Add(key, Group.values[key]);
                 }
             }
         }

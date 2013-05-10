@@ -52,7 +52,7 @@ namespace GroupConcat
                 }
                 else
                 {
-                    this.values.Add(key, 1);
+                    this.values.Add(key, Group.values[key]);
                 }
             }
         }
