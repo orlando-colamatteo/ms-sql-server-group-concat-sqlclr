@@ -30,5 +30,12 @@
 -----------------------------------------------------------------------------------------
 -- select dbo.AggregateName(Column1) from Table1
 
-
-select 'To run your project, please edit the Test.sql file in your project. This file is located in the Test Scripts folder in the Solution Explorer.'
+USE GroupConcatTest;
+GO
+SELECT TOP (1000)
+        at.gp,
+        dbo.GROUP_CONCAT_D(at.c, N','),
+        COUNT(*)
+FROM    dbo.aggtest at
+GROUP BY at.gp
+ORDER BY at.gp;
