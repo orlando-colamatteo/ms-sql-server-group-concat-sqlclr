@@ -22,7 +22,7 @@ namespace GroupConcat
 
         public void Init()
         {
-            this.values = new Dictionary<string, int>();
+            this.values = new Dictionary<string, int>(StringComparer.InvariantCulture);
         }
 
         public void Accumulate([SqlFacet(MaxSize = 4000)] SqlString VALUE)
@@ -81,7 +81,7 @@ namespace GroupConcat
         public void Read(BinaryReader r)
         {
             int itemCount = r.ReadInt32();
-            this.values = new Dictionary<string, int>(itemCount);
+            this.values = new Dictionary<string, int>(itemCount, StringComparer.InvariantCulture);
             for (int i = 0; i <= itemCount - 1; i++)
             {
                 this.values.Add(r.ReadString(), r.ReadInt32());
