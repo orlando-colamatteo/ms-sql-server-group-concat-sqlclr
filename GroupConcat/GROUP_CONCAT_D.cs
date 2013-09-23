@@ -36,7 +36,7 @@ namespace GroupConcat
 
         public void Init()
         {
-            this.values = new Dictionary<string, int>();
+            this.values = new Dictionary<string, int>(StringComparer.InvariantCulture);
             this.delimiter = string.Empty;
         }
 
@@ -105,9 +105,10 @@ namespace GroupConcat
         public void Read(BinaryReader r)
         {
             int itemCount = r.ReadInt32();
-            this.values = new Dictionary<string, int>(itemCount);
+            this.values = new Dictionary<string, int>(itemCount, StringComparer.InvariantCulture);
             for (int i = 0; i <= itemCount - 1; i++)
             {
+                // parameter evaluation order left to right is guaranteed in C# (7.5.1.2 in the C# 4.0 spec)
                 this.values.Add(r.ReadString(), r.ReadInt32());
             }
             this.delimiter = r.ReadString();

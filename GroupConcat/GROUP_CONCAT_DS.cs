@@ -55,7 +55,7 @@ namespace GroupConcat
 
         public void Init()
         {
-            this.values = new Dictionary<string, int>();
+            this.values = new Dictionary<string, int>(StringComparer.InvariantCulture);
             this.delimiter = string.Empty;
             this.sortBy = 0;
         }
@@ -112,7 +112,7 @@ namespace GroupConcat
             {
                 SortedDictionary<string, int> sortedValues;
                 StringBuilder returnStringBuilder = new StringBuilder();
-                
+
                 if (this.sortBy == 2)
                 {
                     // create SortedDictionary in descending order using the ReverseComparer
@@ -144,7 +144,7 @@ namespace GroupConcat
         public void Read(BinaryReader r)
         {
             int itemCount = r.ReadInt32();
-            this.values = new Dictionary<string, int>(itemCount);
+            this.values = new Dictionary<string, int>(itemCount, StringComparer.InvariantCulture);
             for (int i = 0; i <= itemCount - 1; i++)
             {
                 this.values.Add(r.ReadString(), r.ReadInt32());
