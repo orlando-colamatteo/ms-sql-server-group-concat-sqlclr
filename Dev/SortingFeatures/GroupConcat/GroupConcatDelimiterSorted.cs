@@ -6,6 +6,7 @@ using Microsoft.SqlServer.Server;
 using System.IO;
 using System.Collections.Generic;
 using System.Text;
+using GroupConcat.Compare;
 
 namespace GroupConcat
 {
@@ -16,7 +17,7 @@ namespace GroupConcat
                              IsInvariantToDuplicates = false,
                              IsInvariantToOrder = true,
                              IsNullIfEmpty = true)]
-    public struct GROUP_CONCAT_DS : IBinarySerialize
+    public struct GroupConcatDelimiterSorted : IBinarySerialize
     {
         private Dictionary<string, int> values;
         private string delimiter;
@@ -41,12 +42,16 @@ namespace GroupConcat
                 if (this.sortBy == 0)
                 {
                     if (
-                        value.Value != 1 // ASC
+                        value.Value != 1 // ASC as String
                         &&
-                        value.Value != 2 // DESC
+                        value.Value != 2 // DESC as String
+                        &&
+                        value.Value != 3 // ASC as Number
+                        &&
+                        value.Value != 4 // DESC as Number
                         )
                     {
-                        throw new Exception("Invalid SortBy value: use 1 for ASC or 2 for DESC.");
+                        throw new Exception("Invalid SortBy value: use 1 for ASC string, 2 for DESC string, 3 for ASC numeric or 4 for DESC numeric.");
                     }
                     this.sortBy = Convert.ToByte(value.Value);
                 }
@@ -80,7 +85,7 @@ namespace GroupConcat
             }
         }
 
-        public void Merge(GROUP_CONCAT_DS Group)
+        public void Merge(GroupConcatDelimiterSorted Group)
         {
             if (string.IsNullOrEmpty(this.delimiter))
             {
@@ -113,15 +118,21 @@ namespace GroupConcat
                 SortedDictionary<string, int> sortedValues;
                 StringBuilder returnStringBuilder = new StringBuilder();
 
-                if (this.sortBy == 2)
+                // create SortedDictionary
+                switch (this.sortBy)
                 {
-                    // create SortedDictionary in descending order using the ReverseComparer
-                    sortedValues = new SortedDictionary<string, int>(values, new ReverseComparer());
-                }
-                else
-                {
-                    // create SortedDictionary in ascending order using the default comparer
-                    sortedValues = new SortedDictionary<string, int>(values);
+                    case 4:
+                        sortedValues = new SortedDictionary<string, int>(values, new DecimalReverseComparer());
+                        break;
+                    case 3:
+                        sortedValues = new SortedDictionary<string, int>(values, new DecimalComparer());
+                        break;
+                    case 2:
+                        sortedValues = new SortedDictionary<string, int>(values, new ReverseComparer());
+                        break;
+                    default:
+                        sortedValues = new SortedDictionary<string, int>(values);
+                        break;
                 }
 
                 // iterate over the SortedDictionary

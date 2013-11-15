@@ -6,6 +6,7 @@ using Microsoft.SqlServer.Server;
 using System.IO;
 using System.Collections.Generic;
 using System.Text;
+using GroupConcat.Compare;
 
 namespace GroupConcat
 {
@@ -16,16 +17,42 @@ namespace GroupConcat
                              IsInvariantToDuplicates = false,
                              IsInvariantToOrder = true,
                              IsNullIfEmpty = true)]
-    public struct GROUP_CONCAT : IBinarySerialize
+    public struct GroupConcatSorted : IBinarySerialize
     {
         private Dictionary<string, int> values;
+        private byte sortBy;
+
+        private SqlByte SortBy
+        {
+            set
+            {
+                if (this.sortBy == 0)
+                {
+                    if (
+                        value.Value != 1 // ASC as String
+                        &&
+                        value.Value != 2 // DESC as String
+                        &&
+                        value.Value != 3 // ASC as Number
+                        &&
+                        value.Value != 4 // DESC as Number
+                        )
+                    {
+                        throw new Exception("Invalid SortBy value: use 1 for ASC string, 2 for DESC string, 3 for ASC numeric or 4 for DESC numeric.");
+                    }
+                    this.sortBy = Convert.ToByte(value.Value);
+                }
+            }
+        }
 
         public void Init()
         {
             this.values = new Dictionary<string, int>(StringComparer.InvariantCulture);
+            this.sortBy = 0;
         }
 
-        public void Accumulate([SqlFacet(MaxSize = 4000)] SqlString VALUE)
+        public void Accumulate([SqlFacet(MaxSize = 4000)] SqlString VALUE,
+                               SqlByte SORT_ORDER)
         {
             if (!VALUE.IsNull)
             {
@@ -38,11 +65,17 @@ namespace GroupConcat
                 {
                     this.values.Add(key, 1);
                 }
+                this.SortBy = SORT_ORDER;
             }
         }
 
-        public void Merge(GROUP_CONCAT Group)
+        public void Merge(GroupConcatSorted Group)
         {
+            if (this.sortBy == 0)
+            {
+                this.sortBy = Group.sortBy;
+            }
+
             foreach (KeyValuePair<string, int> item in Group.values)
             {
                 string key = item.Key;
@@ -62,13 +95,33 @@ namespace GroupConcat
         {
             if (this.values != null && this.values.Count > 0)
             {
+                SortedDictionary<string, int> sortedValues;
                 StringBuilder returnStringBuilder = new StringBuilder();
 
-                foreach (KeyValuePair<string, int> item in this.values)
+                // create SortedDictionary
+                switch (this.sortBy)
                 {
+                    case 4:
+                        sortedValues = new SortedDictionary<string, int>(values, new DecimalReverseComparer());
+                        break;
+                    case 3:
+                        sortedValues = new SortedDictionary<string, int>(values, new DecimalComparer());
+                        break;
+                    case 2:
+                        sortedValues = new SortedDictionary<string, int>(values, new ReverseComparer());
+                        break;
+                    default:
+                        sortedValues = new SortedDictionary<string, int>(values);
+                        break;
+                }
+
+                // iterate over the SortedDictionary
+                foreach (KeyValuePair<string, int> item in sortedValues)
+                {
+                    string key = item.Key;
                     for (int value = 0; value < item.Value; value++)
                     {
-                        returnStringBuilder.Append(item.Key);
+                        returnStringBuilder.Append(key);
                         returnStringBuilder.Append(",");
                     }
                 }
@@ -86,6 +139,7 @@ namespace GroupConcat
             {
                 this.values.Add(r.ReadString(), r.ReadInt32());
             }
+            this.sortBy = r.ReadByte();
         }
 
         public void Write(BinaryWriter w)
@@ -96,6 +150,7 @@ namespace GroupConcat
                 w.Write(s.Key);
                 w.Write(s.Value);
             }
+            w.Write(this.sortBy);
         }
     }
 }

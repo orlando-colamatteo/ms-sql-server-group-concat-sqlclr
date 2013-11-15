@@ -7,7 +7,6 @@ using System.IO;
 using System.Collections.Generic;
 using System.Text;
 
-
 namespace GroupConcat
 {
     [Serializable]
@@ -17,31 +16,16 @@ namespace GroupConcat
                              IsInvariantToDuplicates = false,
                              IsInvariantToOrder = true,
                              IsNullIfEmpty = true)]
-    public struct GROUP_CONCAT_D : IBinarySerialize
+    public struct GroupConcat : IBinarySerialize
     {
         private Dictionary<string, int> values;
-        private string delimiter;
-
-        private SqlString Delimiter
-        {
-            set
-            {
-                string newDelimiter = value.ToString();
-                if (this.delimiter != newDelimiter)
-                {
-                    this.delimiter = newDelimiter;
-                }
-            }
-        }
 
         public void Init()
         {
             this.values = new Dictionary<string, int>(StringComparer.InvariantCulture);
-            this.delimiter = string.Empty;
         }
 
-        public void Accumulate([SqlFacet(MaxSize = 4000)] SqlString VALUE,
-                               [SqlFacet(MaxSize = 4)] SqlString DELIMITER)
+        public void Accumulate([SqlFacet(MaxSize = 4000)] SqlString VALUE)
         {
             if (!VALUE.IsNull)
             {
@@ -54,17 +38,11 @@ namespace GroupConcat
                 {
                     this.values.Add(key, 1);
                 }
-                this.Delimiter = DELIMITER;
             }
         }
 
-        public void Merge(GROUP_CONCAT_D Group)
+        public void Merge(GroupConcat Group)
         {
-            if (string.IsNullOrEmpty(this.delimiter))
-            {
-                this.delimiter = Group.delimiter;
-            }
-
             foreach (KeyValuePair<string, int> item in Group.values)
             {
                 string key = item.Key;
@@ -91,12 +69,10 @@ namespace GroupConcat
                     for (int value = 0; value < item.Value; value++)
                     {
                         returnStringBuilder.Append(item.Key);
-                        returnStringBuilder.Append(this.delimiter);
+                        returnStringBuilder.Append(",");
                     }
                 }
-
-                // remove trailing delimiter as we return the result
-                return returnStringBuilder.Remove(returnStringBuilder.Length - this.delimiter.Length, this.delimiter.Length).ToString();
+                return returnStringBuilder.Remove(returnStringBuilder.Length - 1, 1).ToString();
             }
 
             return null;
@@ -108,10 +84,8 @@ namespace GroupConcat
             this.values = new Dictionary<string, int>(itemCount, StringComparer.InvariantCulture);
             for (int i = 0; i <= itemCount - 1; i++)
             {
-                // parameter evaluation order left to right is guaranteed in C# (7.5.1.2 in the C# 4.0 spec)
                 this.values.Add(r.ReadString(), r.ReadInt32());
             }
-            this.delimiter = r.ReadString();
         }
 
         public void Write(BinaryWriter w)
@@ -122,7 +96,7 @@ namespace GroupConcat
                 w.Write(s.Key);
                 w.Write(s.Value);
             }
-            w.Write(this.delimiter);
         }
     }
+
 }
