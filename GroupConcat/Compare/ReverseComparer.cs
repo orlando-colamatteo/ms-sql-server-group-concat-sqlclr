@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace GroupConcat
+namespace GroupConcat.Compare
 {
     public class ReverseComparer : IComparer<string>
     {
