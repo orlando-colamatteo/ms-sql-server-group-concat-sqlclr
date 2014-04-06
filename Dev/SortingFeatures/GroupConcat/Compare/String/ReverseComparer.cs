@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
-namespace GroupConcat.Compare
+namespace GroupConcat.Compare.String
 {
     public class ReverseComparer : IComparer<string>
     {

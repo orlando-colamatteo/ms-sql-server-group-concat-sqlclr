@@ -40,12 +40,12 @@ namespace GroupConcat
             this.delimiter = string.Empty;
         }
 
-        public void Accumulate([SqlFacet(MaxSize = 4000)] SqlString VALUE,
-                               [SqlFacet(MaxSize = 4)] SqlString DELIMITER)
+        public void Accumulate([SqlFacet(MaxSize = 4000)] SqlString Value,
+                               [SqlFacet(MaxSize = 4)] SqlString Delimiter)
         {
-            if (!VALUE.IsNull)
+            if (!Value.IsNull)
             {
-                string key = VALUE.Value;
+                string key = Value.Value;
                 if (this.values.ContainsKey(key))
                 {
                     this.values[key] += 1;
@@ -54,7 +54,7 @@ namespace GroupConcat
                 {
                     this.values.Add(key, 1);
                 }
-                this.Delimiter = DELIMITER;
+                this.Delimiter = Delimiter;
             }
         }
 

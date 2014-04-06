@@ -25,11 +25,11 @@ namespace GroupConcat
             this.values = new Dictionary<string, int>(StringComparer.InvariantCulture);
         }
 
-        public void Accumulate([SqlFacet(MaxSize = 4000)] SqlString VALUE)
+        public void Accumulate([SqlFacet(MaxSize = 4000)] SqlString Value)
         {
-            if (!VALUE.IsNull)
+            if (!Value.IsNull)
             {
-                string key = VALUE.Value;
+                string key = Value.Value;
                 if (this.values.ContainsKey(key))
                 {
                     this.values[key] += 1;
