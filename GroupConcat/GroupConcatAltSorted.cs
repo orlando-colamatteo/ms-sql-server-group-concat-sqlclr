@@ -7,6 +7,7 @@ using System.IO;
 using System.Collections.Generic;
 using System.Text;
 using GroupConcat.Compare.Decimal;
+using GroupConcat.Compare.KeyValuePairStringString;
 using GroupConcat.Compare.String;
 
 namespace GroupConcat
@@ -18,9 +19,9 @@ namespace GroupConcat
                              IsInvariantToDuplicates = false,
                              IsInvariantToOrder = true,
                              IsNullIfEmpty = true)]
-    public struct GroupConcatSorted : IBinarySerialize
+    public struct GroupConcatAltSorted : IBinarySerialize
     {
-        private Dictionary<string, int> values;
+        private Dictionary<KeyValuePair<string, string>, int> values;
         private byte sortBy;
 
         private SqlByte SortBy
@@ -48,16 +49,17 @@ namespace GroupConcat
 
         public void Init()
         {
-            this.values = new Dictionary<string, int>(StringComparer.InvariantCulture);
+            this.values = new Dictionary<KeyValuePair<string, string>, int>(new Compare.KeyValuePairStringString.Comparer());
             this.sortBy = 0;
         }
 
         public void Accumulate([SqlFacet(MaxSize = 4000)] SqlString Value,
+                               [SqlFacet(MaxSize = 4000)] SqlString AltSortValue,
                                SqlByte SortOrder)
         {
-            if (!Value.IsNull)
+            if (!Value.IsNull && !AltSortValue.IsNull)
             {
-                string key = Value.Value;
+                KeyValuePair<string, string> key = new KeyValuePair<string, string>(Value.Value, AltSortValue.Value);
                 if (this.values.ContainsKey(key))
                 {
                     this.values[key] += 1;
@@ -70,16 +72,16 @@ namespace GroupConcat
             }
         }
 
-        public void Merge(GroupConcatSorted Group)
+        public void Merge(GroupConcatAltSorted Group)
         {
             if (this.sortBy == 0)
             {
                 this.sortBy = Group.sortBy;
             }
 
-            foreach (KeyValuePair<string, int> item in Group.values)
+            foreach (KeyValuePair<KeyValuePair<string, string>, int> item in Group.values)
             {
-                string key = item.Key;
+                KeyValuePair<string, string> key = item.Key;
                 if (this.values.ContainsKey(key))
                 {
                     this.values[key] += Group.values[key];
@@ -96,33 +98,38 @@ namespace GroupConcat
         {
             if (this.values != null && this.values.Count > 0)
             {
-                SortedDictionary<string, int> sortedValues;
+                SortedDictionary<KeyValuePair<string,string>, int> sortedValues;
                 StringBuilder returnStringBuilder = new StringBuilder();
 
                 // create SortedDictionary
                 switch (this.sortBy)
                 {
+                        
                     case 4:
-                        sortedValues = new SortedDictionary<string, int>(values, new Compare.Decimal.ReverseComparer());
+                        // number desc
+                        sortedValues = new SortedDictionary<KeyValuePair<string, string>, int>(values, new Compare.KeyValuePairStringString.DecimalReverseComparer());
                         break;
                     case 3:
-                        sortedValues = new SortedDictionary<string, int>(values, new Compare.Decimal.Comparer());
+                        // number asc
+                        sortedValues = new SortedDictionary<KeyValuePair<string, string>, int>(values, new Compare.KeyValuePairStringString.DecimalComparer());
                         break;
                     case 2:
-                        sortedValues = new SortedDictionary<string, int>(values, new Compare.String.ReverseComparer());
+                        // string desc
+                        sortedValues = new SortedDictionary<KeyValuePair<string, string>, int>(values, new Compare.KeyValuePairStringString.ReverseComparer());
                         break;
                     default:
-                        sortedValues = new SortedDictionary<string, int>(values);
+                        // string asc
+                        sortedValues = new SortedDictionary<KeyValuePair<string, string>, int>(values, new Compare.KeyValuePairStringString.Comparer());
                         break;
                 }
 
                 // iterate over the SortedDictionary
-                foreach (KeyValuePair<string, int> item in sortedValues)
+                foreach (KeyValuePair<KeyValuePair<string, string>, int> item in sortedValues)
                 {
-                    string key = item.Key;
+                    KeyValuePair<string, string> key = item.Key;
                     for (int value = 0; value < item.Value; value++)
                     {
-                        returnStringBuilder.Append(key);
+                        returnStringBuilder.Append(key.Key);
                         returnStringBuilder.Append(",");
                     }
                 }
@@ -135,10 +142,10 @@ namespace GroupConcat
         public void Read(BinaryReader r)
         {
             int itemCount = r.ReadInt32();
-            this.values = new Dictionary<string, int>(itemCount, StringComparer.InvariantCulture);
+            this.values = new Dictionary<KeyValuePair<string, string>, int>(itemCount, new Compare.KeyValuePairStringString.Comparer());
             for (int i = 0; i <= itemCount - 1; i++)
             {
-                this.values.Add(r.ReadString(), r.ReadInt32());
+                this.values.Add(new KeyValuePair<string, string>(r.ReadString(), r.ReadString()), r.ReadInt32());
             }
             this.sortBy = r.ReadByte();
         }
@@ -146,9 +153,10 @@ namespace GroupConcat
         public void Write(BinaryWriter w)
         {
             w.Write(this.values.Count);
-            foreach (KeyValuePair<string, int> s in this.values)
+            foreach (KeyValuePair<KeyValuePair<string, string>, int> s in this.values)
             {
-                w.Write(s.Key);
+                w.Write(s.Key.Key);
+                w.Write(s.Key.Value);
                 w.Write(s.Value);
             }
             w.Write(this.sortBy);

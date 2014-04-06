@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace GroupConcat.Compare
+namespace GroupConcat.Compare.Decimal
 {
-    public class DecimalComparer : IComparer<string>
+    public class Comparer : IComparer<string>
     {
         public int Compare(string x, string y)
         {

@@ -6,7 +6,8 @@ using Microsoft.SqlServer.Server;
 using System.IO;
 using System.Collections.Generic;
 using System.Text;
-using GroupConcat.Compare;
+using GroupConcat.Compare.Decimal;
+using GroupConcat.Compare.String;
 
 namespace GroupConcat
 {
@@ -65,13 +66,13 @@ namespace GroupConcat
             this.sortBy = 0;
         }
 
-        public void Accumulate([SqlFacet(MaxSize = 4000)] SqlString VALUE,
-                               [SqlFacet(MaxSize = 4)] SqlString DELIMITER,
-                               SqlByte SORT_ORDER)
+        public void Accumulate([SqlFacet(MaxSize = 4000)] SqlString Value,
+                               [SqlFacet(MaxSize = 4)] SqlString Delimiter,
+                               SqlByte SortOrder)
         {
-            if (!VALUE.IsNull)
+            if (!Value.IsNull)
             {
-                string key = VALUE.Value;
+                string key = Value.Value;
                 if (this.values.ContainsKey(key))
                 {
                     this.values[key] += 1;
@@ -80,8 +81,8 @@ namespace GroupConcat
                 {
                     this.values.Add(key, 1);
                 }
-                this.Delimiter = DELIMITER;
-                this.SortBy = SORT_ORDER;
+                this.Delimiter = Delimiter;
+                this.SortBy = SortOrder;
             }
         }
 
@@ -122,13 +123,13 @@ namespace GroupConcat
                 switch (this.sortBy)
                 {
                     case 4:
-                        sortedValues = new SortedDictionary<string, int>(values, new DecimalReverseComparer());
+                        sortedValues = new SortedDictionary<string, int>(values, new Compare.Decimal.ReverseComparer());
                         break;
                     case 3:
-                        sortedValues = new SortedDictionary<string, int>(values, new DecimalComparer());
+                        sortedValues = new SortedDictionary<string, int>(values, new Compare.Decimal.Comparer());
                         break;
                     case 2:
-                        sortedValues = new SortedDictionary<string, int>(values, new ReverseComparer());
+                        sortedValues = new SortedDictionary<string, int>(values, new Compare.String.ReverseComparer());
                         break;
                     default:
                         sortedValues = new SortedDictionary<string, int>(values);

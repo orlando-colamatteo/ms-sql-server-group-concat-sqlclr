@@ -33,7 +33,7 @@
     <FileUpgradeFlags>40</FileUpgradeFlags>
     <UpgradeBackupLocation>C:\temp\tfs12\groupconcat\Main\Backup\GroupConcat\</UpgradeBackupLocation>
     <OldToolsVersion>4.0</OldToolsVersion>
-    <DSP>Microsoft.Data.Tools.Schema.Sql.Sql100DatabaseSchemaProvider</DSP>
+    <DSP>Microsoft.Data.Tools.Schema.Sql.Sql110DatabaseSchemaProvider</DSP>
     <Name>GroupConcat</Name>
     <ProjectVersion>4.0</ProjectVersion>
     <ProjectGuid>{f36e6699-a61b-4acd-9792-1805ef0ad231}</ProjectGuid>
@@ -88,9 +88,14 @@
     <Compile Include="GroupConcatDelimiterSorted.cs" />
     <Compile Include="GroupConcatSorted.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Compare\ReverseComparer.cs" />
-    <Compile Include="Compare\DecimalComparer.cs" />
-    <Compile Include="Compare\DecimalReverseComparer.cs" />
+    <Compile Include="GroupConcatAltSorted.cs" />
+    <Compile Include="Compare\Decimal\Comparer.cs" />
+    <Compile Include="Compare\Decimal\ReverseComparer.cs" />
+    <Compile Include="Compare\KeyValuePairStringString\DecimalComparer.cs" />
+    <Compile Include="Compare\KeyValuePairStringString\ReverseComparer.cs" />
+    <Compile Include="Compare\String\ReverseComparer.cs" />
+    <Compile Include="Compare\KeyValuePairStringString\Comparer.cs" />
+    <Compile Include="Compare\KeyValuePairStringString\DecimalReverseComparer.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Installation Scripts\GroupConcatUninstallation.sql" />
@@ -120,6 +125,9 @@
     <Folder Include="Performance Test Scripts\" />
     <Folder Include="Test Scripts\" />
     <Folder Include="Compare" />
+    <Folder Include="Compare\Decimal" />
+    <Folder Include="Compare\KeyValuePairStringString" />
+    <Folder Include="Compare\String" />
   </ItemGroup>
   <ItemGroup>
     <None Include="GroupConcat.publish.xml" />
