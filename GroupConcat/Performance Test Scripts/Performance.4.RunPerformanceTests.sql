@@ -1,4 +1,22 @@
 /*
+GROUP_CONCAT string aggregate for SQL Server - https://groupconcat.codeplex.com
+Copyright (C) 2011  Orlando Colamatteo
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or 
+any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+See http://www.gnu.org/licenses/ for a copy of the GNU General Public 
+License.
+*/
+
+/*
 Each test is to be run in its own batch. In testing performance of each method I noticed different results, sometimes
 drastically different, when running many queries in the same batch versus each statement in a separate batch.
 
