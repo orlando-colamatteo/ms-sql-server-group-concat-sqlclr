@@ -2,9 +2,9 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <IncludeCompositeObjects>True</IncludeCompositeObjects>
-    <TargetDatabaseName>GroupConcat</TargetDatabaseName>
+    <TargetDatabaseName>GroupConcatTest</TargetDatabaseName>
     <DeployScriptFileName>GroupConcat.sql</DeployScriptFileName>
     <ProfileVersionNumber>1</ProfileVersionNumber>
-    <TargetConnectionString>Data Source=(localdb)\ProjectsV12;Integrated Security=True;Pooling=False</TargetConnectionString>
+    <TargetConnectionString>Data Source=.\SQL2008R2;Integrated Security=True;Pooling=False</TargetConnectionString>
   </PropertyGroup>
 </Project>
