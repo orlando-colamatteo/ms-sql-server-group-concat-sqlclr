@@ -14,6 +14,7 @@ namespace GroupConcat
 {
     [Serializable]
     [SqlUserDefinedAggregate(Format.UserDefined,
+                             Name = "GROUP_CONCAT_AS",
                              MaxByteSize = -1,
                              IsInvariantToNulls = true,
                              IsInvariantToDuplicates = false,
@@ -98,13 +99,13 @@ namespace GroupConcat
         {
             if (this.values != null && this.values.Count > 0)
             {
-                SortedDictionary<KeyValuePair<string,string>, int> sortedValues;
+                SortedDictionary<KeyValuePair<string, string>, int> sortedValues;
                 StringBuilder returnStringBuilder = new StringBuilder();
 
                 // create SortedDictionary
                 switch (this.sortBy)
                 {
-                        
+
                     case 4:
                         // number desc
                         sortedValues = new SortedDictionary<KeyValuePair<string, string>, int>(values, new Compare.KeyValuePairStringString.DecimalReverseComparer());
@@ -129,7 +130,8 @@ namespace GroupConcat
                     KeyValuePair<string, string> key = item.Key;
                     for (int value = 0; value < item.Value; value++)
                     {
-                        returnStringBuilder.Append(key.Key);
+                        //returnStringBuilder.Append(key.Key);
+                        returnStringBuilder.Append(key.Value); // bug fix from alendar
                         returnStringBuilder.Append(",");
                     }
                 }
