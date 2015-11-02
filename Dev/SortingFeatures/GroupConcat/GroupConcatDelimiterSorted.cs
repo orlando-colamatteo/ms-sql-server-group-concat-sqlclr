@@ -13,6 +13,7 @@ namespace GroupConcat
 {
     [Serializable]
     [SqlUserDefinedAggregate(Format.UserDefined,
+                             Name = "GROUP_CONCAT_DS",
                              MaxByteSize = -1,
                              IsInvariantToNulls = true,
                              IsInvariantToDuplicates = false,
