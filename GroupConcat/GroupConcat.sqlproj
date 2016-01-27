@@ -80,8 +80,8 @@
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" Condition="'$(SQLDBExtensionsRefPath)' == ''" />
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="System.Data" />
     <Reference Include="System.XML" />
+    <Reference Include="System.Data" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GroupConcat.cs" />
