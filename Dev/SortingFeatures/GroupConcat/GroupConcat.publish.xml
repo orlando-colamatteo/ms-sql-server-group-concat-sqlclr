@@ -5,6 +5,6 @@
     <TargetDatabaseName>GroupConcatTest</TargetDatabaseName>
     <DeployScriptFileName>GroupConcat.sql</DeployScriptFileName>
     <ProfileVersionNumber>1</ProfileVersionNumber>
-    <TargetConnectionString>Data Source=.\SQL2008R2;Integrated Security=True;Pooling=False</TargetConnectionString>
+    <TargetConnectionString>Data Source=.\SQL2012;Integrated Security=True;Persist Security Info=False;Pooling=False;MultipleActiveResultSets=False;Connect Timeout=60;Encrypt=False;TrustServerCertificate=True</TargetConnectionString>
   </PropertyGroup>
 </Project>

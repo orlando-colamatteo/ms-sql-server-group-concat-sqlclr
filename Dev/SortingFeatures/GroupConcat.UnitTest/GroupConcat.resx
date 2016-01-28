@@ -1,0 +1,271 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="GROUP_CONCAT_D_DISTINCT_TestAction.SqlScript" xml:space="preserve">
+    <value>SELECT  DocID,
+        FieldType,
+        LEN(dbo.GROUP_CONCAT_D(DISTINCT ErrorDetail, N'|')) AS ErrorDetailLen
+FROM    dbo.GroupConcatTestData
+WHERE   DocID = 1
+        AND FieldType = 'Sale Date'
+GROUP BY DocID,
+        FieldType;</value>
+  </data>
+  <data name="GROUP_CONCAT_D_DISTINCT_PretestAction.SqlScript" xml:space="preserve">
+    <value />
+  </data>
+  <data name="GROUP_CONCAT_D_DISTINCT_PosttestAction.SqlScript" xml:space="preserve">
+    <value />
+  </data>
+  <data name="testInitializeAction.SqlScript" xml:space="preserve">
+    <value>IF OBJECT_ID(N'dbo.GroupConcatTestData') &gt; 00
+    DROP TABLE dbo.GroupConcatTestData;
+
+CREATE TABLE dbo.GroupConcatTestData
+(
+ DocID INT NOT NULL,
+ FieldType NVARCHAR(20) NOT NULL,
+ ErrorDetail NVARCHAR(400) NULL
+);
+
+INSERT  INTO dbo.GroupConcatTestData
+        (
+         DocID,
+         FieldType,
+         ErrorDetail
+        )
+        SELECT  1,
+                'Sale Date',
+                'Invalid Sale &amp; Date'
+        UNION ALL
+        SELECT  1,
+                'Sale Date',
+                'Invalid Sale &amp; Date'
+        UNION ALL
+        SELECT  1,
+                'DocumentNumber',
+                'DocumentNumber not a number'
+        UNION ALL
+        SELECT  1,
+                'Sale Date',
+                'Sale Date Before Open Date'
+        UNION ALL
+        SELECT  2,
+                'First Name',
+                'Empty First Name'
+        UNION ALL
+        SELECT  3,
+                'Last Name',
+                'Last Name cannot be NULL'
+        UNION ALL
+        SELECT  3,
+                'DocumentNumber',
+                'DocumentNumber not a number'
+        UNION ALL
+        SELECT  8,
+                'City',
+                'City not found in &lt;State&gt;'
+        UNION ALL
+        SELECT  999,
+                'IsAllocated',
+                NULL
+        UNION ALL
+        SELECT  3330,
+                'IsUtilized',
+                NULL
+        UNION ALL
+        SELECT  3330,
+                'World',
+                'Hello!';
+
+CREATE CLUSTERED INDEX IX_dbo_GroupConcatTestData_DocID_FieldType ON dbo.GroupConcatTestData (DocID,FieldType);
+
+DECLARE @ct INT;
+SELECT  @ct = COUNT(*)
+FROM    dbo.GroupConcatTestData;
+RAISERROR('%d rows in dbo.GroupConcatTestData',10,1,@ct);
+</value>
+  </data>
+  <data name="testCleanupAction.SqlScript" xml:space="preserve">
+    <value />
+  </data>
+  <data name="GROUP_CONCAT_D_TestAction.SqlScript" xml:space="preserve">
+    <value>SELECT  DocID,
+        FieldType,
+        LEN(dbo.GROUP_CONCAT_D(ErrorDetail, N'|')) AS ErrorDetailLen
+FROM    dbo.GroupConcatTestData
+WHERE   DocID = 1
+        AND FieldType = 'Sale Date'
+GROUP BY DocID,
+        FieldType;</value>
+  </data>
+  <data name="GROUP_CONCAT_DISTINCT_TestAction.SqlScript" xml:space="preserve">
+    <value>SELECT  DocID,
+        FieldType,
+        LEN(dbo.GROUP_CONCAT(DISTINCT ErrorDetail)) AS ErrorDetailLen
+FROM    dbo.GroupConcatTestData
+WHERE   DocID = 1
+        AND FieldType = 'Sale Date'
+GROUP BY DocID,
+        FieldType;</value>
+  </data>
+  <data name="GROUP_CONCAT_TestAction.SqlScript" xml:space="preserve">
+    <value>WITH    cte
+          AS (
+              SELECT    DocID,
+                        FieldType,
+                        dbo.GROUP_CONCAT(ErrorDetail) AS ErrorDetail
+              FROM      dbo.GroupConcatTestData
+              WHERE     DocID = 1
+                        AND FieldType = 'Sale Date'
+              GROUP BY  DocID,
+                        FieldType
+             )
+    SELECT  cte.DocID,
+            cte.FieldType,
+            LEN(cte.ErrorDetail) AS ErrorDetailLen,
+            CASE WHEN CHARINDEX(',', cte.ErrorDetail) &gt; 0 THEN 1
+                 ELSE 0
+            END AS ErrorDetailDelimiterLocation
+    FROM    cte;;</value>
+  </data>
+  <data name="GROUP_CONCAT_D_MULTICHAR_DELIMITER_TestAction.SqlScript" xml:space="preserve">
+    <value>WITH    cte
+          AS (
+              SELECT    DocID,
+                        FieldType,
+                        dbo.GROUP_CONCAT_D(DISTINCT ErrorDetail, N'~~~~') AS ErrorDetail
+              FROM      dbo.GroupConcatTestData
+              WHERE     DocID = 1
+                        AND FieldType = 'Sale Date'
+              GROUP BY  DocID,
+                        FieldType
+             )
+    SELECT  cte.DocID,
+            cte.FieldType,
+            LEN(cte.ErrorDetail) AS ErrorDetailLen,
+            CASE WHEN CHARINDEX('~~~~', cte.ErrorDetail) &gt; 0 THEN 1
+                 ELSE 0
+            END AS ErrorDetailDelimiterLocation
+    FROM    cte;;</value>
+  </data>
+  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+</root>
