@@ -1,0 +1,101 @@
+<div class="wikidoc">
+<p><span style="text-decoration:underline"><strong>User Guide</strong></span></p>
+<p><strong>Deployment Instructions:</strong></p>
+<ul>
+<li>Download&nbsp;<strong>GroupConcatInstallation.zip</strong>.&nbsp; </li><li>Extract archive contents to a local directory.&nbsp;The archive contains the following files:
+<ul>
+<li><strong>GroupConcatInstallation.sql</strong>&nbsp;Contains the SQL statements to enable SQL CLR in a given database, build the GroupConcat Assembly and User-defined Aggregates.
+</li><li><strong>GroupConcatUninstallation.sql</strong>&nbsp;Contains the SQL statements to drop the GroupConcat Assembly and User-defined Aggregates.
+</li><li><strong>Test.1.BuildTestData.sql</strong>&nbsp;Contains SQL statements to build a table containing test data.
+</li><li><strong>Test.2.DemoFunctions.sql</strong>&nbsp;Contains SQL statements that demonstrate the usefulness of the User-defined Aggregates as well as compares them to the XML methods they can replace.
+</li></ul>
+</li><li>Open&nbsp;GroupConcatInstallation.sql in SSMS. </li><li>Edit the database name in the USE statement at the top to suit your environment and execute.
+</li></ul>
+<p><strong>Syntax:</strong></p>
+<ul>
+<li><strong><span style="font-weight:normal"><strong>dbo.GROUP_CONCAT(VALUE NVARCHAR(4000))</strong></span></strong>
+<ul>
+<li><strong><span style="font-weight:normal">Description</span></strong>
+<ul>
+<li><span style="font-weight:normal">Aggregate function accepts strings to be aggregated and produces a comma-delimited list of grouped strings.</span><strong><span style="font-weight:normal"><br>
+</span></strong></li></ul>
+</li><li><strong><span style="font-weight:normal">Arguments</span></strong>
+<ul>
+<li><strong><span style="font-weight:normal">VALUE: any valid string</span></strong>
+</li></ul>
+</li><li>Return type
+<ul>
+<li>NVARCHAR(MAX) </li></ul>
+</li></ul>
+</li><li><strong></strong><strong><strong><span><strong>dbo.</strong></span></strong>GROUP_CONCAT_D(<strong><strong>VALUE</strong></strong><strong><strong>&nbsp;NVARCHAR(4000), DELIMITER NVARCHAR(10)</strong></strong>)</strong>&nbsp;
+<ul>
+<li>Description
+<ul>
+<li>Aggregate function&nbsp;accepts strings to be aggregated&nbsp;and a custom delimiter and produces a delimited list of grouped strings.
+</li></ul>
+</li><li>Arguments
+<ul>
+<li>VALUE: any valid string </li><li>DELIMITER: any valid string </li></ul>
+</li><li>Return type
+<ul>
+<li>NVARCHAR(MAX) </li></ul>
+</li></ul>
+</li><li><strong><strong><span><strong>dbo.</strong></span></strong>GROUP_CONCAT_DS(<strong><strong><strong>VALUE</strong></strong><strong><strong>&nbsp;NVARCHAR(4000), DELIMITER NVARCHAR(10), SORT_ORDER TINYINT)</strong></strong></strong></strong>
+<ul>
+<li>Description
+<ul>
+<li>Aggregate function&nbsp;accepts strings to be aggregated, a custom delimiter and a sort order and produces a delimited list of grouped strings in the desired order.
+</li></ul>
+</li><li>Arguments
+<ul>
+<li>VALUE: any valid string </li><li>DELIMITER: any valid string </li><li>SORT_ORDER: tinyint; 1 = Ascending Order, 2 = Descending order </li></ul>
+</li><li>Return type
+<ul>
+<li>NVARCHAR(MAX) </li></ul>
+</li></ul>
+</li><li><strong><strong><span><strong>dbo.</strong></span></strong>GROUP_CONCAT_S<strong>(<strong><strong><strong>VALUE</strong></strong><strong><strong>&nbsp;NVARCHAR(4000), SORT_ORDER TINYINT)</strong></strong></strong></strong></strong>
+<ul>
+<li>Description
+<ul>
+<li>Aggregate function&nbsp;accepts strings to be aggregated&nbsp;and a sort order and produces a comma-delimited list of grouped strings in the desired order.
+</li></ul>
+</li><li>Arguments
+<ul>
+<li>VALUE: any valid string </li><li>SORT_ORDER: tinyint; 1 = Ascending Order, 2 = Descending order </li></ul>
+</li><li>Return type
+<ul>
+<li>NVARCHAR(MAX) </li></ul>
+</li></ul>
+</li></ul>
+<p><strong>Test Instructions:</strong></p>
+<ul>
+<li>Follow the Deployment Instructions above to make the Aggregates available in your environment.
+</li><li>Open script&nbsp;<strong>Test.1.BuildTestData.sql</strong>&nbsp;in SSMS and execute in test environment to build some test data to be used for exercising the UDAs.
+</li><li>Open script&nbsp;<strong>Test.2.DemoFunctions.sql</strong>&nbsp;in SSMS and&nbsp;execute in test environment to exercise the UDAs as well the XML methods they can replace.
+</li></ul>
+<p><strong>FAQ:</strong></p>
+<p style="padding-left:30px"><strong>Q:</strong>&nbsp;Why should I bother using these UDAs when I can get the same results using T-SQL w/ XML and avoid enabling the SQLCLR?<br>
+<strong>A:</strong>&nbsp;It is true that you can&nbsp;arrive at the same result using&nbsp;T-SQL w/ XML and avoid enabling the SQLCLR. If you are in an environment where SQLCLR is disabled, and the powers-that-be will not allow it to be enabled for one reason
+ or another, then unfortunately this solution will not work for you. However, if SQLCLR is an option, the UDAs offer a more intuitive and concise syntax than do the XML methods and they provide comparable or better performance* than the XML methods.<br>
+&nbsp; &nbsp; <em>*&nbsp;depends on use case, see next FAQ</em></p>
+<p style="padding-left:30px"><strong>Q:</strong> How do the UDAs stack up with other methods in terms of performance?<br>
+<strong>A: </strong>An extensive performance analysis was done where results of the &quot;XML PATH&quot; *, &quot;XML PATH,TYPE&quot; and UDAs were compared when handling 6 different use cases. When the &quot;XML PATH&quot; method was included in the testing (it is not an option for volatile
+ data because of the escape issue) the UDAs outperformed the XML methods in 3 of 6 use cases. When the &quot;XML PATH&quot; method was excluded due to the character escape issue&nbsp;the UDAs outperformed&nbsp;the&nbsp;&quot;XML PATH,TYPE&quot; method in 4 of 6 use cases.<br>
+<em>&nbsp; &nbsp; * &nbsp;the&nbsp;&quot;XML PATH&quot; method suffers from an issue where ampersands and angle brackets are escaped as &amp;amp; &amp;lt; and &amp;gt; which disqualifies them from use in many scenarios due to the display problems that can cause</em></p>
+<p style="padding-left:30px"><strong>Q:</strong> Why provide four UDAs instead of just one with all the parameters one might need?<br>
+<strong>A:</strong> SQL CLR functions do not currently allow for overloading as in .NET methods. For each specialized interface a separate UDA is required.&nbsp;Performance tip: Pick the correct UDA for your use-case. If you want a comma-delimited unsorted
+ list there is no need to use GROUP_CONCAT_D or GROUP_CONCAT_DS because comma is the default delimiter and they will perform slightly worse over the same data than GROUP_CONCAT and GROUP_CONCAT_S respectively.</p>
+<p style="padding-left:30px"><strong>Q:</strong> Why not use the example UDA from Microsoft Books Online?<br>
+<strong>A:</strong> The UDAs in this project utilize a more efficient internal data structure for storing, joining and sorting grouped strings.</p>
+<p><strong>Known Limitations:</strong></p>
+<ol>
+<li>Delimited lists can only be sorted&nbsp;by&nbsp;the values they contain. If you require sorting by a column other than the values they contain use the XML methods.
+</li><li>Delimited lists are sorted as strings. If the values must be sorted as numeric use the XML method. There is an open Issue that once resolved will give the option to sort values as numerics.
+</li></ol>
+<p><strong>Source Code:</strong></p>
+<p>The <em>Main</em> directory contains the&nbsp;source code in the downloadable release bundle.&nbsp;If you are interested only in the code supporting the released solution look in the&nbsp;<em>Main</em>&nbsp;directory.</p>
+<p>The <em>Experimental</em>&nbsp;directory&nbsp;contains source code from my research &amp; development that lead to the code contained in the&nbsp;<em>Main</em>&nbsp;directory. However, the code in
+<em>Main</em>&nbsp;is not related to <em>Experimental</em>&nbsp; by any branching. It was a pre-cursor to the
+<em>Main</em> code and is there for your consideration, to show other methods reviewed and attempted before the the technique emerged and
+<em>Main</em>&nbsp;was developed.</p>
+</div><div class="ClearBoth"></div>
