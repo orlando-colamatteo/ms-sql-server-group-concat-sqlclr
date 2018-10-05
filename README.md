@@ -12,7 +12,8 @@ Amazon's RDS Service.
 * Create a custom DB Parameters Group
 * Set the 'clr enable' value to 1 in the custom DB Parameter Group
 * Configure your RDS instance to use the custom DB Parameter Group
-* Connect to the RDS SQL Server using SSMS
+* Connect to the RDS SQL Server using SSMS with the RDS Instance Master User 
 * Create a new query and paste in the RDSGroupConcatInstallation.sql script
 * Modify the 'USE' line to set the target DB to install GROUP_CONCAT
-* Execute the RDSGroupConcatInstallation.sql installation sql script
+* Execute the query to run the RDSGroupConcatInstallation.sql script
+* The GroupConcat assembly is installed to the target database > programability > assemblies
