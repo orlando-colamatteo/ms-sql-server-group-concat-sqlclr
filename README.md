@@ -1,6 +1,8 @@
 # ms-sql-server-group-concat-sqlclr
 See /docs/documentation.html & /docs/home.html
 
+Please, visit my GitHub Pages site for more information 
+http://orlando-colamatteo.github.io/ms-sql-server-group-concat-sqlclr/
 
 #### Installation on AWS RDS
 Installation of GROUP_CONCAT requires an advanced SQL Server option "clr enabled" to be set to 1. 
