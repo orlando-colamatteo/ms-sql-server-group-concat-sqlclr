@@ -1,5 +1,5 @@
 ﻿/*
-GROUP_CONCAT string aggregate for SQL Server - https://groupconcat.codeplex.com
+GROUP_CONCAT string aggregate for SQL Server - https://github.com/orlando-colamatteo/ms-sql-server-group-concat-sqlclr
 Copyright (C) 2011  Orlando Colamatteo
 
 This program is free software: you can redistribute it and/or modify
@@ -73,7 +73,7 @@ IF @@TRANCOUNT = 0
 GO
 EXEC sys.sp_addextendedproperty 
     @name = N'URL',
-    @value = N'http://groupconcat.codeplex.com',
+    @value = N'https://github.com/orlando-colamatteo/ms-sql-server-group-concat-sqlclr',
     @level0type = N'ASSEMBLY',
     @level0name = N'GroupConcat'
 GO
