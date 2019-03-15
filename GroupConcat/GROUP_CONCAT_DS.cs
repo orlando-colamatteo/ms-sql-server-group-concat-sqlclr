@@ -1,5 +1,5 @@
 ﻿/*
-GROUP_CONCAT string aggregate for SQL Server - https://groupconcat.codeplex.com
+GROUP_CONCAT string aggregate for SQL Server - https://github.com/orlando-colamatteo/ms-sql-server-group-concat-sqlclr
 Copyright (C) 2011  Orlando Colamatteo
 
 This program is free software: you can redistribute it and/or modify
